@@ -4,10 +4,10 @@ LABEL "com.github.actions.icon"="bell"
 LABEL "com.github.actions.color"="yellow"
 LABEL "com.github.actions.name"="Slack Notify"
 LABEL "com.github.actions.description"="This action will send notification to Slack"
-LABEL "org.opencontainers.image.source"="https://github.com/rtCamp/action-slack-notify"
+LABEL "org.opencontainers.image.source"="https://github.com/APina03/action-slack-notify"
 
-WORKDIR ${GOPATH}/src/github.com/rtcamp/action-slack-notify
-COPY main.go ${GOPATH}/src/github.com/rtcamp/action-slack-notify
+WORKDIR ${GOPATH}/src/github.com/APina03/action-slack-notify
+COPY main.go ${GOPATH}/src/github.com/APina03/action-slack-notify
 
 ENV CGO_ENABLED 0
 ENV GOOS linux
@@ -16,11 +16,11 @@ RUN go get -v ./...
 RUN go build -a -installsuffix cgo -ldflags '-w  -extldflags "-static"' -o /go/bin/slack-notify .
 
 # alpine:latest at 2020-01-18T01:19:37.187497623Z
-FROM alpine@sha256:ab00606a42621fb68f2ed6ad3c88be54397f981a7b70a79db3d1172b11c4367d
+FROM alpine:3.13
 
 COPY --from=builder /go/bin/slack-notify /usr/bin/slack-notify
 
-ENV VAULT_VERSION 1.0.2
+ENV VAULT_VERSION 1.8.4
 
 RUN apk update \
 	&& apk upgrade \
